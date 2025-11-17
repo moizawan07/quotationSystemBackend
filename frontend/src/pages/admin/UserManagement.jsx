@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Search, Plus, MoreVertical, Bell, X } from "lucide-react";
+import { useDataContext } from "../../context/DataContext";
 
 const UserManagement = () => {
-  const [users] = useState([
-    { id: 1, name: "Florence Shaw", email: "florenceshaw@gmail.com", access: "Secondary", role: "sales expert", lastAction: "Jan.02,2023", dateAdded: "Jan.02,2022", avatar: "FS" },
-    { id: 2, name: "Jhon Maverick Sina", email: "jhonmaverick39@gmail.com", access: "Secondary", role: "sales expert", lastAction: "Feb.09,2023", dateAdded: "Feb.09,2022", avatar: "JM" },
-    // ... other users
-  ]);
+ 
+   const { data } = useDataContext();
+  const users = data?.users || [];
+
+
+  
 
   const [showProfile, setShowProfile] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -51,7 +53,7 @@ const UserManagement = () => {
         {/* Table Header */}
         <div className="p-3 md:p-4 border-b border-gray-200 flex flex-col md:flex-row justify-between gap-3 md:items-center">
           <h2 className="text-sm md:text-base font-medium text-gray-900 flex items-center gap-2">
-            All Users <span className="text-gray-400 font-normal">2000</span>
+            All Users <span className="text-gray-400 font-normal">{users.length}</span>
           </h2>
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
@@ -89,14 +91,14 @@ const UserManagement = () => {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {filteredUsers.map((user) => (
-                <tr key={user.id} className="hover:bg-gray-50">
+                <tr key={user._id} className="hover:bg-gray-50">
                   <td className="px-4 md:px-6 py-4">
                     <input type="checkbox" className="rounded border-gray-300" />
                   </td>
                   <td className="px-4 md:px-6 py-4">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-                        <span className="text-sm font-medium text-gray-700">{user.avatar}</span>
+                        <img src={user.profileImage} className="w-full h-full object-cover" />
                       </div>
                       <div>
                         <div className="text-sm font-medium text-gray-900">{user.name}</div>
@@ -106,12 +108,12 @@ const UserManagement = () => {
                   </td>
                   <td className="px-4 md:px-6 py-4">
                     <div className="flex flex-wrap gap-2">
-                      <span className="px-3 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">{user.access}</span>
-                      <span className="px-3 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">{user.role}</span>
+                      <span className="px-3 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">all</span>
+                      <span className="px-3 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">staff</span>
                     </div>
                   </td>
-                  <td className="px-4 md:px-6 py-4 text-sm text-gray-500">{user.lastAction}</td>
-                  <td className="px-4 md:px-6 py-4 text-sm text-gray-500">{user.dateAdded}</td>
+                  <td className="px-4 md:px-6 py-4 text-sm text-gray-500">{new Date(user.updatedAt).toLocaleDateString()}</td>
+                  <td className="px-4 md:px-6 py-4 text-sm text-gray-500">{new Date(user.createdAt).toLocaleDateString()}</td>
                   <td className="px-4 md:px-6 py-4">
                     <button className="p-1 hover:bg-gray-100 rounded">
                       <MoreVertical className="w-5 h-5 text-gray-400" />

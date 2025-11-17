@@ -13,10 +13,12 @@ import {
 } from "lucide-react";
 import Userimg from "../../assets/images/profileImg.png";
 import { Link } from "react-router-dom";
+import { useAuthContext } from "../../context/AuthContext";
 
 const ProfileSidebar = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const {logout} = useAuthContext()
 
   const MenuItem = ({ icon, label, link, hasArrow = true }) => (
     <Link
@@ -129,14 +131,15 @@ const ProfileSidebar = () => {
 
         {/* Logout Link */}
         <div className="mt-auto pt-4 mb-[46px] border-gray-200 pb-[5px] sm:mb-[146px]">
-          <Link
-            to="/logout"
+          <p
+          onClick={logout}
+          to="#"
             className="w-full flex items-center p-3 pb-[5px] rounded-lg text-gray-700 
             hover:bg-red-50 hover:text-red-600 transition duration-150"
           >
             <LogOut className="w-5 h-5" />
             <span className="ml-4 text-sm">Logout</span>
-          </Link>
+          </p>
         </div>
       </div>
 

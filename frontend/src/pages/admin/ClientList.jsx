@@ -1,73 +1,86 @@
 import React, { useState } from "react";
-import { Search, ChevronDown, X, } from "lucide-react";
+import { Search, ChevronDown, X } from "lucide-react";
 import Sidebar from "../../components/common/Sidebar";
+import { useDataContext } from "../../context/DataContext";
 
 export default function ClientDashboard() {
-  const [clients] = useState([
-    {
-      id: 1,
-      name: "James Carter",
-      company: "Graphite Solutions",
-      phone: "‪+1 202 555 0143‬",
-      status: "Approved",
-      date: "11-02-2025",
-      amount: "$100",
-    },
-    {
-      id: 2,
-      name: "James Carter",
-      company: "Graphite Solutions",
-      phone: "‪+1 202 555 0143‬",
-      status: "Rejected",
-      date: "11-02-2025",
-      amount: "$100",
-    },
-    {
-      id: 3,
-      name: "James Carter",
-      company: "Graphite Solutions",
-      phone: "‪+1 202 555 0143‬",
-      status: "Approved",
-      date: "11-02-2025",
-      amount: "$100",
-    },
-    {
-      id: 4,
-      name: "James Carter",
-      company: "Graphite Solutions",
-      phone: "‪+1 202 555 0143‬",
-      status: "Rejected",
-      date: "11-02-2025",
-      amount: "$100",
-    },
-    {
-      id: 5,
-      name: "James Carter",
-      company: "Graphite Solutions",
-      phone: "‪+1 202 555 0143‬",
-      status: "Approved",
-      date: "11-02-2025",
-      amount: "$100",
-    },
-    {
-      id: 6,
-      name: "James Carter",
-      company: "Graphite Solutions",
-      phone: "‪+1 202 555 0143‬",
-      status: "Rejected",
-      date: "11-02-2025",
-      amount: "$100",
-    },
-    {
-      id: 7,
-      name: "James Carter",
-      company: "Graphite Solutions",
-      phone: "‪+1 202 555 0143‬",
-      status: "Approved",
-      date: "11-02-2025",
-      amount: "$100",
-    },
-  ]);
+  // const [clients] = useState([
+  //   {
+  //     id: 1,
+  //     name: "James Carter",
+  //     company: "Graphite Solutions",
+  //     phone: "‪+1 202 555 0143‬",
+  //     status: "Approved",
+  //     date: "11-02-2025",
+  //     amount: "$100",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "James Carter",
+  //     company: "Graphite Solutions",
+  //     phone: "‪+1 202 555 0143‬",
+  //     status: "Rejected",
+  //     date: "11-02-2025",
+  //     amount: "$100",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "James Carter",
+  //     company: "Graphite Solutions",
+  //     phone: "‪+1 202 555 0143‬",
+  //     status: "Approved",
+  //     date: "11-02-2025",
+  //     amount: "$100",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "James Carter",
+  //     company: "Graphite Solutions",
+  //     phone: "‪+1 202 555 0143‬",
+  //     status: "Rejected",
+  //     date: "11-02-2025",
+  //     amount: "$100",
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "James Carter",
+  //     company: "Graphite Solutions",
+  //     phone: "‪+1 202 555 0143‬",
+  //     status: "Approved",
+  //     date: "11-02-2025",
+  //     amount: "$100",
+  //   },
+  //   {
+  //     id: 6,
+  //     name: "James Carter",
+  //     company: "Graphite Solutions",
+  //     phone: "‪+1 202 555 0143‬",
+  //     status: "Rejected",
+  //     date: "11-02-2025",
+  //     amount: "$100",
+  //   },
+  //   {
+  //     id: 7,
+  //     name: "James Carter",
+  //     company: "Graphite Solutions",
+  //     phone: "‪+1 202 555 0143‬",
+  //     status: "Approved",
+  //     date: "11-02-2025",
+  //     amount: "$100",
+  //   },
+  // ]);
+  const { data } = useDataContext();
+  const quotations = data?.quotations || [];
+   const users = data?.users || [];
+   const totalClients = users.length;
+   const approvedQuotation = quotations.filter(quo => quo.status === 'completed').length
+   const rejectedQuotation = quotations.filter(quo => quo.status === 'rejected').length
+   const totalQuotationValue  = quotations.reduce((acc, quo) => { return quo.totalAmount + acc}, 0)
+
+  
+   
+
+
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 sm:p-6">
@@ -105,9 +118,7 @@ export default function ClientDashboard() {
               className="w-8 h-8 rounded-full"
             />
             <div className="text-right">
-              <p className="text-sm font-medium text-gray-900">
-                Brown Martin
-              </p>
+              <p className="text-sm font-medium text-gray-900">Brown Martin</p>
               <p className="text-xs text-gray-500">@brown.m</p>
             </div>
           </div>
@@ -133,7 +144,7 @@ export default function ClientDashboard() {
               </svg>
             </div>
           </div>
-          <div className="text-3xl font-bold text-gray-900">65</div>
+          <div className="text-3xl font-bold text-gray-900">{totalClients}</div>
           <div className="text-sm text-gray-500 mt-1">+2% vs last week</div>
         </div>
 
@@ -156,7 +167,7 @@ export default function ClientDashboard() {
               </svg>
             </div>
           </div>
-          <div className="text-3xl font-bold text-gray-900">65</div>
+          <div className="text-3xl font-bold text-gray-900">{approvedQuotation}</div>
           <div className="text-sm text-gray-500 mt-1">+2% vs last week</div>
         </div>
 
@@ -167,7 +178,7 @@ export default function ClientDashboard() {
               <X className="w-4 h-4 text-red-600" />
             </div>
           </div>
-          <div className="text-3xl font-bold text-gray-900">01</div>
+          <div className="text-3xl font-bold text-gray-900">{rejectedQuotation}</div>
           <div className="text-sm text-gray-500 mt-1">+2% vs last week</div>
         </div>
 
@@ -190,7 +201,7 @@ export default function ClientDashboard() {
               </svg>
             </div>
           </div>
-          <div className="text-3xl font-bold text-gray-900">$99</div>
+          <div className="text-3xl font-bold text-gray-900">{totalQuotationValue}</div>
           <div className="text-sm text-gray-500 mt-1">+2% vs last week</div>
         </div>
       </div>
@@ -244,35 +255,42 @@ export default function ClientDashboard() {
             </thead>
 
             <tbody className="divide-y divide-gray-200">
-              {clients.map((client) => (
-                <tr key={client.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 text-sm text-gray-900">
-                    {client.name}
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-900">
-                    {client.company}
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-900">
-                    {client.phone}
-                  </td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`px-3 py-1 text-xs rounded-full font-medium ${client.status === "Approved"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-700"
+              {quotations.map((client) => {
+                const customer = client.customerDetails;
+                console.log("customer ===>", customer);
+
+                return (
+                  <tr key={client._id} className="hover:bg-gray-50">
+                    {console.log(customer.customerName)}
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      {customer.customerName}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      {customer.companyName}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      {customer.phoneNumber}
+                    </td>
+                    <td className="px-6 py-4">
+                      <span
+                        className={`px-3 py-1 text-xs rounded-full font-medium ${
+                          client.status === "Approved"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-red-100 text-red-700"
                         }`}
-                    >
-                      {client.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-900">
-                    {client.date}
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-900">
-                    {client.amount}
-                  </td>
-                </tr>
-              ))}
+                      >
+                        {client.status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      {new Date(client.createdAt).toLocaleDateString()}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      {client.totalAmount}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -303,7 +321,6 @@ export default function ClientDashboard() {
           </div>
         </div>
       </div>
-
     </div>
   );
 }

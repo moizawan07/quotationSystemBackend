@@ -87,6 +87,8 @@ exports.deleteQuotation = async (req, res) => {
 exports.dashboardSummary = async (req, res) => {
   try {
     const companyId = req.headers.companyid;
+    console.log("cmpany id in headre ==>", companyId);
+    
 
     if (!companyId) {
       return res
@@ -103,7 +105,6 @@ exports.dashboardSummary = async (req, res) => {
     const users = await User.find({ companyId });
 
     return res.status(200).json({
-      success: true,
       quotations, // full quotations array
       users, // full staff array
     });

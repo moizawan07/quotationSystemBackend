@@ -90,6 +90,8 @@ exports.login = async (req, res) => {
       {
         name: foundUser.name,
         email: foundUser.email,
+        profileImage: foundUser.profileImage,
+        gender: foundUser.gender,
         companyName:
           role === "admin"
             ? foundUser.companyName

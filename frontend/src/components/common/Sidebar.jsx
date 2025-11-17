@@ -2,10 +2,16 @@ import { NavLink, Link } from "react-router-dom";
 import { Users, FileText, LayoutDashboard, UserPlus, Plus, ChevronLeft, History } from "lucide-react";
 import Logo from "../../assets/images/logo.png";
 import LogoText from "../../assets/images/logo 2.png";
+import { useAuthContext } from "../../context/AuthContext";
 
 const PROFILE_IMAGE_URL = "https://i.ibb.co/L9LzK2b/brown-martin.png";
 
 const Sidebar = ({ isOpen, closeSidebar }) => {
+  const {getUserDetails} = useAuthContext()
+  const userData = getUserDetails();
+
+  console.log("userData ==>", userData);
+  
   return (
     <aside
       className={`
@@ -81,12 +87,12 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
       <div className="p-4 border-t border-gray-200 mt-auto">
         <Link to="/profile" className="flex items-center cursor-pointer">
           <img
-            src={PROFILE_IMAGE_URL}
+            src={userData?.profileImage}
             className="w-10 h-10 rounded-full object-cover mr-3"
             alt="Profile"
           />
           <div>
-            <p className="text-sm font-semibold text-gray-800">Brown Martin</p>
+            <p className="text-sm font-semibold text-gray-800">{userData?.name}</p>
             <p className="text-xs text-gray-500">Business owner</p>
           </div>
         </Link>
