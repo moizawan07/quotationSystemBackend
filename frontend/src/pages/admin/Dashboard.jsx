@@ -18,7 +18,7 @@ import axios from "axios";
 export default function Dashboard() {
   const { getUserDetails, token } = useAuthContext();
   const userData = getUserDetails();
-  const { data, setData } = useDataContext();
+  const { data, setData, dataLoad } = useDataContext();
   const quotations = data?.quotations || [];
   const users = data?.users || [];
 
@@ -27,16 +27,16 @@ export default function Dashboard() {
   const totalUsers = users.length;
 
   useEffect(() => {
-    const dataLoad = async () => {
+    // const dataLoad = async () => {
       
-      const url = `${base_url}/quotation/dasboard-summary`;
-      const res = await axios.get(url, {
-        headers: {
-          companyid: userData.companyId,
-        },
-      });
-      setData(res.data);
-    };
+    //   const url = `${base_url}/quotation/dasboard-summary`;
+    //   const res = await axios.get(url, {
+    //     headers: {
+    //       companyid: userData.companyId,
+    //     },
+    //   });
+    //   setData(res.data);
+    // };
 
     if (token === false) return;
     dataLoad();
